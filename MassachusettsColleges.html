@@ -1,0 +1,142 @@
+<!doctype html>
+
+<html lang="en">
+
+  <head>
+
+
+    <meta charset="utf-8" />
+
+
+    <title>Colleges in the State of Massachusetts</title>
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+    
+<link
+      href="https://api.tiles.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <style>
+
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+      
+      .mapboxgl-popup {
+        max-width: 300px;
+      }
+      
+      .mapboxgl-popup-content {
+        text-align: center;
+        padding: 10px;
+        font-family: Arial, sans-serif;
+      }
+      
+      .mapboxgl-popup-content h3 {
+        margin: 0;
+        padding: 5px;
+        font-size: 16px;
+      }
+    </style>
+
+
+  </head>
+
+
+
+  <body>
+
+    <div id="map"></div>
+
+    <script>
+
+
+
+      mapboxgl.accessToken = 'pk.eyJ1IjoibXBhbWF0byIsImEiOiJjbTllY2tvODIwcnFlMmtvYXhvcHJrYWNlIn0.HXJd4i4eKtgqR55ytpKcbg';
+      const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mpamato/cm9egb6zt00cn01qp8ugx7mmx',
+        center: [-71.382439, 42.407211],
+        zoom: 7
+      });
+
+
+
+      map.on('load', () => {
+
+        console.log('Available map layers:', map.getStyle().layers.map(layer => layer.id));
+        
+        map.on('click', (event) => {
+
+
+
+
+          const features = map.queryRenderedFeatures(event.point);
+          
+          if (!features.length) return;
+          
+          console.log('All features at click point:', features);
+          
+
+
+          const collegeFeature = features.find(feature => 
+  feature.properties && 
+  Object.keys(feature.properties).some(key => key.toLowerCase() === 'college')
+);
+
+          
+          if (!collegeFeature) {
+            console.log('No college feature found at this point');
+
+
+            return;
+          }
+          
+          console.log('College feature found:', collegeFeature);
+          
+          
+
+
+          const properties = collegeFeature.properties;
+
+          const collegeName = properties.college || properties.COLLEGE || properties.College || "Unknown College";
+          
+
+
+
+          const popup = new mapboxgl.Popup({ offset: [0, -15] })
+            .setLngLat(event.lngLat)
+            .setHTML(`<h3>${collegeName}</h3>`)
+            .addTo(map);
+        });
+        
+
+
+        map.on('mouseenter', 'college-points', () => {
+          map.getCanvas().style.cursor = 'pointer';
+        });
+        
+
+        map.on('mouseleave', 'college-points', () => {
+          map.getCanvas().style.cursor = '';
+        });
+      });
+
+    </script>
+
+
+
+  </body>
+
+</html>
