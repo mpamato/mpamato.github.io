@@ -120,7 +120,7 @@
 
     <script>
         function initMap() {
-            // Define location data with more information
+            
             const locations = [
                 {
                     name: "Campus Pond",
@@ -134,7 +134,7 @@
                         events: "Location of the annual Duck Day celebration and seasonal light displays."
                     },
                     hours: "Open 24/7",
-                    website: "https://www.umass.edu/campus-life/campus-pond"
+                    website: "https://www.umass.edu/admissions/articles/pond-fires-bring-campus-together"
                 },
                 {
                     name: "Minuteman Statue",
@@ -149,6 +149,7 @@
                     },
                     nearbyAttractions: "Located near the Student Union and Campus Center",
                     funFact: "The statue is modeled after Captain John Parker who led the militia at Lexington."
+                    website: "https://theclio.com/entry/54150"
                 },
                 {
                     name: "Olver Design Building",
@@ -163,6 +164,7 @@
                     },
                     hours: "Mon-Fri: 7am-10pm, Sat-Sun: 9am-6pm",
                     awards: "2018 Award for Design Excellence from the AIA"
+                    website: "https://www.umass.edu/bct/about-us/the-design-building-at-umass-amherst/"
                 },
                 {
                     name: "Morrill Science Center",
@@ -177,6 +179,7 @@
                     },
                     hours: "Mon-Fri: 7am-9pm, Sat: 8am-5pm, Sun: Closed",
                     funFact: "The building's maze-like structure is infamous among freshmen who often get lost in its corridors."
+                    website: "https://en.wikipedia.org/wiki/Morrill_Science_Center/"
                 },
                 {
                     name: "Fine Arts Center",
@@ -191,6 +194,7 @@
                     },
                     upcomingEvents: "Check the FAC website for current performance schedule",
                     hours: "Building: Mon-Fri: 9am-5pm, Gallery: Tue-Fri: 11am-4:30pm, Sat-Sun: 2-5pm"
+                    website: "https://fac.umass.edu/UMCA/Online/"
                 },
                 {
                     name: "W.E.B. Du Bois Library",
@@ -204,7 +208,8 @@
                         features: "Home to the W.E.B. Du Bois papers and Learning Commons."
                     },
                     hours: "Mon-Thu: 8am-10pm, Fri: 8am-6pm, Sat: 10am-6pm, Sun: 10am-10pm",
-                    funFact: "The building is sinking at a rate of 1/8 inch per year due to its massive weight."
+                    funFact: "This building can be seen from 20 miles away."
+                    website: "https://en.wikipedia.org/wiki/W._E._B._Du_Bois_Library"
                 },
                 {
                     name: "Mullins Center",
@@ -273,19 +278,19 @@
                     </div>
                 `;
                 
-                // Create info window
+                
                 const infoWindow = new google.maps.InfoWindow({
                     content: contentString
                 });
                 infoWindows.push(infoWindow);
                 
-                // Add click listener to marker
+                
                 marker.addListener("click", () => {
                     infoWindows.forEach(window => window.close());
                     infoWindow.open(map, marker);
                 });
                 
-                // Create location list button
+                
                 const button = document.createElement("button");
                 button.className = "location-button";
                 button.textContent = location.name;
@@ -298,17 +303,17 @@
                 locationList.appendChild(button);
             });
             
-            // Filter functionality
+            
             const filterButtons = document.querySelectorAll(".filter-button");
             filterButtons.forEach(button => {
                 button.addEventListener("click", () => {
-                    // Update active state
+                    
                     filterButtons.forEach(btn => btn.classList.remove("active"));
                     button.classList.add("active");
                     
                     const category = button.getAttribute("data-category");
                     
-                    // Filter markers
+                    
                     markers.forEach((marker, i) => {
                         if (category === "all" || marker.category === category) {
                             marker.setVisible(true);
@@ -318,7 +323,7 @@
                         }
                     });
                     
-                    // Filter location list
+                    
                     const locationButtons = document.querySelectorAll(".location-button");
                     locationButtons.forEach(btn => {
                         if (category === "all" || btn.getAttribute("data-category") === category) {
@@ -331,7 +336,7 @@
             });
         }
         
-        // Function to toggle details in info window
+        
         function toggleDetails(index) {
             const detailsElement = document.getElementById(`details-${index}`);
             if (detailsElement) {
@@ -339,7 +344,7 @@
             }
         }
         
-        // Function to get directions
+        
         function getDirections(lat, lng) {
             window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`, '_blank');
         }
